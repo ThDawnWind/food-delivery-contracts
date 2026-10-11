@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package delivery.v1;
+
+option go_package = "github.com/ThDawnWind/food-delivery-contracts/gen/go/delivery/v1;deliveryv1";
+
+message CalculateDeliveryRequest {
+    int64 order_amount = 1;
+}
+
+message CalculateDeliveryResponse {
+    int64 delivery_price = 1;
+}
+ 
+
+service DeliveryService {
+    rpc CalculateDelivery(CalculateDeliveryRequest)
+        returns (CalculateDeliveryResponse);
+ }
