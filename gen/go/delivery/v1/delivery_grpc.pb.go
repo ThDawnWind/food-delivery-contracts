@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	DeliveryService_CalculateDelivery_FullMethodName = "/delivery.v1.DeliveryService/CalculateDelivery"
+	DeliveryService_TrackDelivery_FullMethodName     = "/delivery.v1.DeliveryService/TrackDelivery"
 )
 
 // DeliveryServiceClient is the client API for DeliveryService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeliveryServiceClient interface {
 	CalculateDelivery(ctx context.Context, in *CalculateDeliveryRequest, opts ...grpc.CallOption) (*CalculateDeliveryResponse, error)
+	TrackDelivery(ctx context.Context, in *TrackDeliveryRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DeliveryStatusUpdate], error)
 }
 
 type deliveryServiceClient struct {
@@ -47,11 +49,31 @@ func (c *deliveryServiceClient) CalculateDelivery(ctx context.Context, in *Calcu
 	return out, nil
 }
 
+func (c *deliveryServiceClient) TrackDelivery(ctx context.Context, in *TrackDeliveryRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DeliveryStatusUpdate], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DeliveryService_ServiceDesc.Streams[0], DeliveryService_TrackDelivery_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[TrackDeliveryRequest, DeliveryStatusUpdate]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeliveryService_TrackDeliveryClient = grpc.ServerStreamingClient[DeliveryStatusUpdate]
+
 // DeliveryServiceServer is the server API for DeliveryService service.
 // All implementations must embed UnimplementedDeliveryServiceServer
 // for forward compatibility.
 type DeliveryServiceServer interface {
 	CalculateDelivery(context.Context, *CalculateDeliveryRequest) (*CalculateDeliveryResponse, error)
+	TrackDelivery(*TrackDeliveryRequest, grpc.ServerStreamingServer[DeliveryStatusUpdate]) error
 	mustEmbedUnimplementedDeliveryServiceServer()
 }
 
@@ -64,6 +86,9 @@ type UnimplementedDeliveryServiceServer struct{}
 
 func (UnimplementedDeliveryServiceServer) CalculateDelivery(context.Context, *CalculateDeliveryRequest) (*CalculateDeliveryResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CalculateDelivery not implemented")
+}
+func (UnimplementedDeliveryServiceServer) TrackDelivery(*TrackDeliveryRequest, grpc.ServerStreamingServer[DeliveryStatusUpdate]) error {
+	return status.Error(codes.Unimplemented, "method TrackDelivery not implemented")
 }
 func (UnimplementedDeliveryServiceServer) mustEmbedUnimplementedDeliveryServiceServer() {}
 func (UnimplementedDeliveryServiceServer) testEmbeddedByValue()                         {}
@@ -104,6 +129,17 @@ func _DeliveryService_CalculateDelivery_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeliveryService_TrackDelivery_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(TrackDeliveryRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(DeliveryServiceServer).TrackDelivery(m, &grpc.GenericServerStream[TrackDeliveryRequest, DeliveryStatusUpdate]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeliveryService_TrackDeliveryServer = grpc.ServerStreamingServer[DeliveryStatusUpdate]
+
 // DeliveryService_ServiceDesc is the grpc.ServiceDesc for DeliveryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -116,6 +152,12 @@ var DeliveryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DeliveryService_CalculateDelivery_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "TrackDelivery",
+			Handler:       _DeliveryService_TrackDelivery_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "delivery/v1/delivery.proto",
 }

@@ -11,9 +11,28 @@ message CalculateDeliveryRequest {
 message CalculateDeliveryResponse {
     int64 delivery_price = 1;
 }
- 
 
+message TrackDeliveryRequest {
+    int64 delivery_id = 1;
+}
+
+enum DeliveryStatus {
+    DELIVERY_STATUS_UNSPECIFIED = 0;
+    DELIVERY_STATUS_CREATED = 1;
+    DELIVERY_STATUS_COURIER_ASSIGNED = 2;
+    DELIVERY_STATUS_PICKED_UP = 3;
+    DELIVERY_STATUS_ON_THE_WAY = 4;
+    DELIVERY_STATUS_DELIVERED = 5;
+}
+
+message DeliveryStatusUpdate {
+    int64 delivery_id = 1;
+    DeliveryStatus status = 2;
+}
 service DeliveryService {
     rpc CalculateDelivery(CalculateDeliveryRequest)
         returns (CalculateDeliveryResponse);
+
+    rpc TrackDelivery(TrackDeliveryRequest)
+        returns (stream DeliveryStatusUpdate);
  }
