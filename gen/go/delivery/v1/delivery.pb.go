@@ -386,11 +386,12 @@ const file_delivery_v1_delivery_proto_rawDesc = "" +
 	" DELIVERY_STATUS_COURIER_ASSIGNED\x10\x02\x12\x1d\n" +
 	"\x19DELIVERY_STATUS_PICKED_UP\x10\x03\x12\x1e\n" +
 	"\x1aDELIVERY_STATUS_ON_THE_WAY\x10\x04\x12\x1d\n" +
-	"\x19DELIVERY_STATUS_DELIVERED\x10\x052\xc3\x02\n" +
+	"\x19DELIVERY_STATUS_DELIVERED\x10\x052\xa0\x03\n" +
 	"\x0fDeliveryService\x12b\n" +
 	"\x11CalculateDelivery\x12%.delivery.v1.CalculateDeliveryRequest\x1a&.delivery.v1.CalculateDeliveryResponse\x12W\n" +
 	"\rTrackDelivery\x12!.delivery.v1.TrackDeliveryRequest\x1a!.delivery.v1.DeliveryStatusUpdate0\x01\x12s\n" +
-	"\x16CalculateBatchDelivery\x12*.delivery.v1.CalculateBatchDeliveryRequest\x1a+.delivery.v1.CalculateBatchDeliveryResponse(\x01BMZKgithub.com/ThDawnWind/food-delivery-contracts/gen/go/delivery/v1;deliveryv1b\x06proto3"
+	"\x16CalculateBatchDelivery\x12*.delivery.v1.CalculateBatchDeliveryRequest\x1a+.delivery.v1.CalculateBatchDeliveryResponse(\x01\x12[\n" +
+	"\x0fTrackDeliveries\x12!.delivery.v1.TrackDeliveryRequest\x1a!.delivery.v1.DeliveryStatusUpdate(\x010\x01BMZKgithub.com/ThDawnWind/food-delivery-contracts/gen/go/delivery/v1;deliveryv1b\x06proto3"
 
 var (
 	file_delivery_v1_delivery_proto_rawDescOnce sync.Once
@@ -420,11 +421,13 @@ var file_delivery_v1_delivery_proto_depIdxs = []int32{
 	1, // 1: delivery.v1.DeliveryService.CalculateDelivery:input_type -> delivery.v1.CalculateDeliveryRequest
 	3, // 2: delivery.v1.DeliveryService.TrackDelivery:input_type -> delivery.v1.TrackDeliveryRequest
 	4, // 3: delivery.v1.DeliveryService.CalculateBatchDelivery:input_type -> delivery.v1.CalculateBatchDeliveryRequest
-	2, // 4: delivery.v1.DeliveryService.CalculateDelivery:output_type -> delivery.v1.CalculateDeliveryResponse
-	6, // 5: delivery.v1.DeliveryService.TrackDelivery:output_type -> delivery.v1.DeliveryStatusUpdate
-	5, // 6: delivery.v1.DeliveryService.CalculateBatchDelivery:output_type -> delivery.v1.CalculateBatchDeliveryResponse
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
+	3, // 4: delivery.v1.DeliveryService.TrackDeliveries:input_type -> delivery.v1.TrackDeliveryRequest
+	2, // 5: delivery.v1.DeliveryService.CalculateDelivery:output_type -> delivery.v1.CalculateDeliveryResponse
+	6, // 6: delivery.v1.DeliveryService.TrackDelivery:output_type -> delivery.v1.DeliveryStatusUpdate
+	5, // 7: delivery.v1.DeliveryService.CalculateBatchDelivery:output_type -> delivery.v1.CalculateBatchDeliveryResponse
+	6, // 8: delivery.v1.DeliveryService.TrackDeliveries:output_type -> delivery.v1.DeliveryStatusUpdate
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name

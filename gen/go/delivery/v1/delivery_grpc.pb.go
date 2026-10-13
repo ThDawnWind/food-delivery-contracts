@@ -22,6 +22,7 @@ const (
 	DeliveryService_CalculateDelivery_FullMethodName      = "/delivery.v1.DeliveryService/CalculateDelivery"
 	DeliveryService_TrackDelivery_FullMethodName          = "/delivery.v1.DeliveryService/TrackDelivery"
 	DeliveryService_CalculateBatchDelivery_FullMethodName = "/delivery.v1.DeliveryService/CalculateBatchDelivery"
+	DeliveryService_TrackDeliveries_FullMethodName        = "/delivery.v1.DeliveryService/TrackDeliveries"
 )
 
 // DeliveryServiceClient is the client API for DeliveryService service.
@@ -31,6 +32,7 @@ type DeliveryServiceClient interface {
 	CalculateDelivery(ctx context.Context, in *CalculateDeliveryRequest, opts ...grpc.CallOption) (*CalculateDeliveryResponse, error)
 	TrackDelivery(ctx context.Context, in *TrackDeliveryRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DeliveryStatusUpdate], error)
 	CalculateBatchDelivery(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculateBatchDeliveryRequest, CalculateBatchDeliveryResponse], error)
+	TrackDeliveries(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[TrackDeliveryRequest, DeliveryStatusUpdate], error)
 }
 
 type deliveryServiceClient struct {
@@ -83,6 +85,19 @@ func (c *deliveryServiceClient) CalculateBatchDelivery(ctx context.Context, opts
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DeliveryService_CalculateBatchDeliveryClient = grpc.ClientStreamingClient[CalculateBatchDeliveryRequest, CalculateBatchDeliveryResponse]
 
+func (c *deliveryServiceClient) TrackDeliveries(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[TrackDeliveryRequest, DeliveryStatusUpdate], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DeliveryService_ServiceDesc.Streams[2], DeliveryService_TrackDeliveries_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[TrackDeliveryRequest, DeliveryStatusUpdate]{ClientStream: stream}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeliveryService_TrackDeliveriesClient = grpc.BidiStreamingClient[TrackDeliveryRequest, DeliveryStatusUpdate]
+
 // DeliveryServiceServer is the server API for DeliveryService service.
 // All implementations must embed UnimplementedDeliveryServiceServer
 // for forward compatibility.
@@ -90,6 +105,7 @@ type DeliveryServiceServer interface {
 	CalculateDelivery(context.Context, *CalculateDeliveryRequest) (*CalculateDeliveryResponse, error)
 	TrackDelivery(*TrackDeliveryRequest, grpc.ServerStreamingServer[DeliveryStatusUpdate]) error
 	CalculateBatchDelivery(grpc.ClientStreamingServer[CalculateBatchDeliveryRequest, CalculateBatchDeliveryResponse]) error
+	TrackDeliveries(grpc.BidiStreamingServer[TrackDeliveryRequest, DeliveryStatusUpdate]) error
 	mustEmbedUnimplementedDeliveryServiceServer()
 }
 
@@ -108,6 +124,9 @@ func (UnimplementedDeliveryServiceServer) TrackDelivery(*TrackDeliveryRequest, g
 }
 func (UnimplementedDeliveryServiceServer) CalculateBatchDelivery(grpc.ClientStreamingServer[CalculateBatchDeliveryRequest, CalculateBatchDeliveryResponse]) error {
 	return status.Error(codes.Unimplemented, "method CalculateBatchDelivery not implemented")
+}
+func (UnimplementedDeliveryServiceServer) TrackDeliveries(grpc.BidiStreamingServer[TrackDeliveryRequest, DeliveryStatusUpdate]) error {
+	return status.Error(codes.Unimplemented, "method TrackDeliveries not implemented")
 }
 func (UnimplementedDeliveryServiceServer) mustEmbedUnimplementedDeliveryServiceServer() {}
 func (UnimplementedDeliveryServiceServer) testEmbeddedByValue()                         {}
@@ -166,6 +185,13 @@ func _DeliveryService_CalculateBatchDelivery_Handler(srv interface{}, stream grp
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type DeliveryService_CalculateBatchDeliveryServer = grpc.ClientStreamingServer[CalculateBatchDeliveryRequest, CalculateBatchDeliveryResponse]
 
+func _DeliveryService_TrackDeliveries_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(DeliveryServiceServer).TrackDeliveries(&grpc.GenericServerStream[TrackDeliveryRequest, DeliveryStatusUpdate]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeliveryService_TrackDeliveriesServer = grpc.BidiStreamingServer[TrackDeliveryRequest, DeliveryStatusUpdate]
+
 // DeliveryService_ServiceDesc is the grpc.ServiceDesc for DeliveryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -187,6 +213,12 @@ var DeliveryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "CalculateBatchDelivery",
 			Handler:       _DeliveryService_CalculateBatchDelivery_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "TrackDeliveries",
+			Handler:       _DeliveryService_TrackDeliveries_Handler,
+			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},
