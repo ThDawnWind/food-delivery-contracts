@@ -211,6 +211,102 @@ func (x *TrackDeliveryRequest) GetDeliveryId() int64 {
 	return 0
 }
 
+type CalculateBatchDeliveryRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	OrderAmount   int64                  `protobuf:"varint,1,opt,name=order_amount,json=orderAmount,proto3" json:"order_amount,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CalculateBatchDeliveryRequest) Reset() {
+	*x = CalculateBatchDeliveryRequest{}
+	mi := &file_delivery_v1_delivery_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CalculateBatchDeliveryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateBatchDeliveryRequest) ProtoMessage() {}
+
+func (x *CalculateBatchDeliveryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_delivery_v1_delivery_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateBatchDeliveryRequest.ProtoReflect.Descriptor instead.
+func (*CalculateBatchDeliveryRequest) Descriptor() ([]byte, []int) {
+	return file_delivery_v1_delivery_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CalculateBatchDeliveryRequest) GetOrderAmount() int64 {
+	if x != nil {
+		return x.OrderAmount
+	}
+	return 0
+}
+
+type CalculateBatchDeliveryResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	OrdersCount        int64                  `protobuf:"varint,1,opt,name=orders_count,json=ordersCount,proto3" json:"orders_count,omitempty"`
+	TotalDeliveryPrice int64                  `protobuf:"varint,2,opt,name=total_delivery_price,json=totalDeliveryPrice,proto3" json:"total_delivery_price,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CalculateBatchDeliveryResponse) Reset() {
+	*x = CalculateBatchDeliveryResponse{}
+	mi := &file_delivery_v1_delivery_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CalculateBatchDeliveryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CalculateBatchDeliveryResponse) ProtoMessage() {}
+
+func (x *CalculateBatchDeliveryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_delivery_v1_delivery_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CalculateBatchDeliveryResponse.ProtoReflect.Descriptor instead.
+func (*CalculateBatchDeliveryResponse) Descriptor() ([]byte, []int) {
+	return file_delivery_v1_delivery_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CalculateBatchDeliveryResponse) GetOrdersCount() int64 {
+	if x != nil {
+		return x.OrdersCount
+	}
+	return 0
+}
+
+func (x *CalculateBatchDeliveryResponse) GetTotalDeliveryPrice() int64 {
+	if x != nil {
+		return x.TotalDeliveryPrice
+	}
+	return 0
+}
+
 type DeliveryStatusUpdate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeliveryId    int64                  `protobuf:"varint,1,opt,name=delivery_id,json=deliveryId,proto3" json:"delivery_id,omitempty"`
@@ -221,7 +317,7 @@ type DeliveryStatusUpdate struct {
 
 func (x *DeliveryStatusUpdate) Reset() {
 	*x = DeliveryStatusUpdate{}
-	mi := &file_delivery_v1_delivery_proto_msgTypes[3]
+	mi := &file_delivery_v1_delivery_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -233,7 +329,7 @@ func (x *DeliveryStatusUpdate) String() string {
 func (*DeliveryStatusUpdate) ProtoMessage() {}
 
 func (x *DeliveryStatusUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_delivery_v1_delivery_proto_msgTypes[3]
+	mi := &file_delivery_v1_delivery_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -246,7 +342,7 @@ func (x *DeliveryStatusUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeliveryStatusUpdate.ProtoReflect.Descriptor instead.
 func (*DeliveryStatusUpdate) Descriptor() ([]byte, []int) {
-	return file_delivery_v1_delivery_proto_rawDescGZIP(), []int{3}
+	return file_delivery_v1_delivery_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *DeliveryStatusUpdate) GetDeliveryId() int64 {
@@ -274,7 +370,12 @@ const file_delivery_v1_delivery_proto_rawDesc = "" +
 	"\x0edelivery_price\x18\x01 \x01(\x03R\rdeliveryPrice\"7\n" +
 	"\x14TrackDeliveryRequest\x12\x1f\n" +
 	"\vdelivery_id\x18\x01 \x01(\x03R\n" +
-	"deliveryId\"l\n" +
+	"deliveryId\"B\n" +
+	"\x1dCalculateBatchDeliveryRequest\x12!\n" +
+	"\forder_amount\x18\x01 \x01(\x03R\vorderAmount\"u\n" +
+	"\x1eCalculateBatchDeliveryResponse\x12!\n" +
+	"\forders_count\x18\x01 \x01(\x03R\vordersCount\x120\n" +
+	"\x14total_delivery_price\x18\x02 \x01(\x03R\x12totalDeliveryPrice\"l\n" +
 	"\x14DeliveryStatusUpdate\x12\x1f\n" +
 	"\vdelivery_id\x18\x01 \x01(\x03R\n" +
 	"deliveryId\x123\n" +
@@ -285,10 +386,11 @@ const file_delivery_v1_delivery_proto_rawDesc = "" +
 	" DELIVERY_STATUS_COURIER_ASSIGNED\x10\x02\x12\x1d\n" +
 	"\x19DELIVERY_STATUS_PICKED_UP\x10\x03\x12\x1e\n" +
 	"\x1aDELIVERY_STATUS_ON_THE_WAY\x10\x04\x12\x1d\n" +
-	"\x19DELIVERY_STATUS_DELIVERED\x10\x052\xce\x01\n" +
+	"\x19DELIVERY_STATUS_DELIVERED\x10\x052\xc3\x02\n" +
 	"\x0fDeliveryService\x12b\n" +
 	"\x11CalculateDelivery\x12%.delivery.v1.CalculateDeliveryRequest\x1a&.delivery.v1.CalculateDeliveryResponse\x12W\n" +
-	"\rTrackDelivery\x12!.delivery.v1.TrackDeliveryRequest\x1a!.delivery.v1.DeliveryStatusUpdate0\x01BMZKgithub.com/ThDawnWind/food-delivery-contracts/gen/go/delivery/v1;deliveryv1b\x06proto3"
+	"\rTrackDelivery\x12!.delivery.v1.TrackDeliveryRequest\x1a!.delivery.v1.DeliveryStatusUpdate0\x01\x12s\n" +
+	"\x16CalculateBatchDelivery\x12*.delivery.v1.CalculateBatchDeliveryRequest\x1a+.delivery.v1.CalculateBatchDeliveryResponse(\x01BMZKgithub.com/ThDawnWind/food-delivery-contracts/gen/go/delivery/v1;deliveryv1b\x06proto3"
 
 var (
 	file_delivery_v1_delivery_proto_rawDescOnce sync.Once
@@ -303,22 +405,26 @@ func file_delivery_v1_delivery_proto_rawDescGZIP() []byte {
 }
 
 var file_delivery_v1_delivery_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_delivery_v1_delivery_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_delivery_v1_delivery_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_delivery_v1_delivery_proto_goTypes = []any{
-	(DeliveryStatus)(0),               // 0: delivery.v1.DeliveryStatus
-	(*CalculateDeliveryRequest)(nil),  // 1: delivery.v1.CalculateDeliveryRequest
-	(*CalculateDeliveryResponse)(nil), // 2: delivery.v1.CalculateDeliveryResponse
-	(*TrackDeliveryRequest)(nil),      // 3: delivery.v1.TrackDeliveryRequest
-	(*DeliveryStatusUpdate)(nil),      // 4: delivery.v1.DeliveryStatusUpdate
+	(DeliveryStatus)(0),                    // 0: delivery.v1.DeliveryStatus
+	(*CalculateDeliveryRequest)(nil),       // 1: delivery.v1.CalculateDeliveryRequest
+	(*CalculateDeliveryResponse)(nil),      // 2: delivery.v1.CalculateDeliveryResponse
+	(*TrackDeliveryRequest)(nil),           // 3: delivery.v1.TrackDeliveryRequest
+	(*CalculateBatchDeliveryRequest)(nil),  // 4: delivery.v1.CalculateBatchDeliveryRequest
+	(*CalculateBatchDeliveryResponse)(nil), // 5: delivery.v1.CalculateBatchDeliveryResponse
+	(*DeliveryStatusUpdate)(nil),           // 6: delivery.v1.DeliveryStatusUpdate
 }
 var file_delivery_v1_delivery_proto_depIdxs = []int32{
 	0, // 0: delivery.v1.DeliveryStatusUpdate.status:type_name -> delivery.v1.DeliveryStatus
 	1, // 1: delivery.v1.DeliveryService.CalculateDelivery:input_type -> delivery.v1.CalculateDeliveryRequest
 	3, // 2: delivery.v1.DeliveryService.TrackDelivery:input_type -> delivery.v1.TrackDeliveryRequest
-	2, // 3: delivery.v1.DeliveryService.CalculateDelivery:output_type -> delivery.v1.CalculateDeliveryResponse
-	4, // 4: delivery.v1.DeliveryService.TrackDelivery:output_type -> delivery.v1.DeliveryStatusUpdate
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
+	4, // 3: delivery.v1.DeliveryService.CalculateBatchDelivery:input_type -> delivery.v1.CalculateBatchDeliveryRequest
+	2, // 4: delivery.v1.DeliveryService.CalculateDelivery:output_type -> delivery.v1.CalculateDeliveryResponse
+	6, // 5: delivery.v1.DeliveryService.TrackDelivery:output_type -> delivery.v1.DeliveryStatusUpdate
+	5, // 6: delivery.v1.DeliveryService.CalculateBatchDelivery:output_type -> delivery.v1.CalculateBatchDeliveryResponse
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -335,7 +441,7 @@ func file_delivery_v1_delivery_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_delivery_v1_delivery_proto_rawDesc), len(file_delivery_v1_delivery_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

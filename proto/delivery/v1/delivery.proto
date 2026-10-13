@@ -25,14 +25,27 @@ enum DeliveryStatus {
     DELIVERY_STATUS_DELIVERED = 5;
 }
 
+message CalculateBatchDeliveryRequest {
+    int64 order_amount = 1;
+}
+
+message CalculateBatchDeliveryResponse {
+    int64 orders_count = 1;
+    int64 total_delivery_price = 2;
+}
+
 message DeliveryStatusUpdate {
     int64 delivery_id = 1;
     DeliveryStatus status = 2;
 }
+
 service DeliveryService {
     rpc CalculateDelivery(CalculateDeliveryRequest)
         returns (CalculateDeliveryResponse);
 
     rpc TrackDelivery(TrackDeliveryRequest)
         returns (stream DeliveryStatusUpdate);
+
+    rpc CalculateBatchDelivery(stream CalculateBatchDeliveryRequest)
+        returns (CalculateBatchDeliveryResponse);
  }
