@@ -37,6 +37,7 @@ message CalculateBatchDeliveryResponse {
 message DeliveryStatusUpdate {
     int64 delivery_id = 1;
     DeliveryStatus status = 2;
+    int64 updated_at_unix = 3;
 }
 
 service DeliveryService {

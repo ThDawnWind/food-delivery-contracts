@@ -311,6 +311,7 @@ type DeliveryStatusUpdate struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	DeliveryId    int64                  `protobuf:"varint,1,opt,name=delivery_id,json=deliveryId,proto3" json:"delivery_id,omitempty"`
 	Status        DeliveryStatus         `protobuf:"varint,2,opt,name=status,proto3,enum=delivery.v1.DeliveryStatus" json:"status,omitempty"`
+	UpdatedAtUnix int64                  `protobuf:"varint,3,opt,name=updated_at_unix,json=updatedAtUnix,proto3" json:"updated_at_unix,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -359,6 +360,13 @@ func (x *DeliveryStatusUpdate) GetStatus() DeliveryStatus {
 	return DeliveryStatus_DELIVERY_STATUS_UNSPECIFIED
 }
 
+func (x *DeliveryStatusUpdate) GetUpdatedAtUnix() int64 {
+	if x != nil {
+		return x.UpdatedAtUnix
+	}
+	return 0
+}
+
 var File_delivery_v1_delivery_proto protoreflect.FileDescriptor
 
 const file_delivery_v1_delivery_proto_rawDesc = "" +
@@ -375,11 +383,12 @@ const file_delivery_v1_delivery_proto_rawDesc = "" +
 	"\forder_amount\x18\x01 \x01(\x03R\vorderAmount\"u\n" +
 	"\x1eCalculateBatchDeliveryResponse\x12!\n" +
 	"\forders_count\x18\x01 \x01(\x03R\vordersCount\x120\n" +
-	"\x14total_delivery_price\x18\x02 \x01(\x03R\x12totalDeliveryPrice\"l\n" +
+	"\x14total_delivery_price\x18\x02 \x01(\x03R\x12totalDeliveryPrice\"\x94\x01\n" +
 	"\x14DeliveryStatusUpdate\x12\x1f\n" +
 	"\vdelivery_id\x18\x01 \x01(\x03R\n" +
 	"deliveryId\x123\n" +
-	"\x06status\x18\x02 \x01(\x0e2\x1b.delivery.v1.DeliveryStatusR\x06status*\xd2\x01\n" +
+	"\x06status\x18\x02 \x01(\x0e2\x1b.delivery.v1.DeliveryStatusR\x06status\x12&\n" +
+	"\x0fupdated_at_unix\x18\x03 \x01(\x03R\rupdatedAtUnix*\xd2\x01\n" +
 	"\x0eDeliveryStatus\x12\x1f\n" +
 	"\x1bDELIVERY_STATUS_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17DELIVERY_STATUS_CREATED\x10\x01\x12$\n" +
